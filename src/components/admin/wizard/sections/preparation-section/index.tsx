@@ -5,9 +5,9 @@ export function PreparationStep(): JSX.Element {
   const { users } = useUsersConnection();
 
   return (
-    <div className="flex flex-col gap-7 h-[28rem]">
+    <div className="flex flex-col gap-7 min-h-[28rem]">
       <h2 className="text-3xl font-semibold loading-dots">
-        Esperando participantes
+        Esperando a todos los participantes
       </h2>
       <div className="flex flex-wrap gap-14">
         {users.map((user) => (
