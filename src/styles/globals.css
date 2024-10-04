@@ -69,3 +69,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .loading-dots::after {
+    position: relative;
+    display: inline-block;
+    animation: loading-dots 2.3s infinite;
+    content: '.';
+
+    @keyframes loading-dots {
+      0% {
+        content: '.';
+      }
+      33% {
+        content: '..';
+      }
+      66% {
+        content: '...';
+      }
+    }
+  }
+}
