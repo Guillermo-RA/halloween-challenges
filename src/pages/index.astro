@@ -1,9 +1,11 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { RegisterSection } from "@/components/guest/register-section";
 ---
 
 <Layout title="Halloween Challenges">
-  <main class="mx-auto max-w-screen-lg p-4 bg-white min-h-screen">
-    <h1 class="text-4xl font-bold text-foreground">Halloween Challenges</h1>
+  <main class="mx-auto max-w-screen-sm p-10 min-h-screen bg-purple-950/30">
+    <h1 class="text-4xl font-bold text-primary mb-14">Halloween Challenges</h1>
+    <RegisterSection client:load />
   </main>
 </Layout>
