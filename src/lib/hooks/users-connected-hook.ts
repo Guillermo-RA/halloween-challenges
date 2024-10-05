@@ -1,5 +1,5 @@
 import { getAvatar } from '@/lib/helpers';
-import { socket } from '@/lib/socket';
+import { socket } from '@/lib/utils/socket';
 import type { User } from '@/lib/types/User';
 import { useEffect, useState } from 'react';
 

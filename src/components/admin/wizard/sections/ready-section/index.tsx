@@ -3,7 +3,6 @@ import { useUsersConnection } from "@/lib/contexts/users-connection-context";
 
 export function ReadyStep(): JSX.Element {
   const { users } = useUsersConnection();
-
   const readyUsers = users.filter((user) => user.ready);
 
   return (

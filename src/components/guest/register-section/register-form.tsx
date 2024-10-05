@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { REGISTER } from "@/lib/constants/api-routes";
+import { fetcher } from "@/lib/utils/fetch";
 import { useState } from "react";
 
 export function RegisterForm() {
@@ -31,7 +32,7 @@ function NameInput({
   };
 
   return (
-    <label className="text-lg flex flex-col gap-2 h-28">
+    <label className="text-lg flex flex-col gap-1 h-24">
       <span className="font-medium">Nombre *</span>
       <Input
         type="text"
@@ -39,8 +40,9 @@ function NameInput({
         placeholder="Nombre"
         className="h-10 text-lg font-bold bg-secondary shrink-0"
         onChange={handleChange}
+        autoComplete="first-name"
       />
-      <span className="text-red-500 text-sm">{error}</span>
+      <span className="text-red-500 text-sm pl-2">{error}</span>
     </label>
   );
 }
@@ -68,15 +70,7 @@ async function handleSubmit(
 
   if (data.name === "") throw new Error("El nombre es obligatorio");
 
-  const response = await fetch(REGISTER, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) => res.json());
+  const response = await fetcher(REGISTER, data, { method: "POST" });
 
-  if (response.error) {
-    throw new Error(response.message);
-  }
+  console.log(response);
 }

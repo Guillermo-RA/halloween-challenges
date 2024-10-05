@@ -1,7 +1,11 @@
 import { StepNavigation } from "@/components/admin/wizard/components/step-navigation";
 import { PreparationStep } from "@/components/admin/wizard/sections/preparation-section";
 import { ReadyStep } from "@/components/admin/wizard/sections/ready-section";
-import { UsersConnectionProvider } from "@/lib/contexts/users-connection-context";
+import {
+  UsersConnectionProvider,
+  useUsersConnection,
+} from "@/lib/contexts/users-connection-context";
+import type { User } from "@/lib/types/User";
 import { useState } from "react";
 
 export const STEPS = {
@@ -11,7 +15,16 @@ export const STEPS = {
 };
 
 export function ChallengeWizard(): JSX.Element {
+  return (
+    <UsersConnectionProvider>
+      <Wizard />
+    </UsersConnectionProvider>
+  );
+}
+
+function Wizard() {
   const [step, setStep] = useState(STEPS.ONE);
+  const { users } = useUsersConnection();
 
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1);
@@ -22,16 +35,15 @@ export function ChallengeWizard(): JSX.Element {
   };
 
   return (
-    <UsersConnectionProvider>
-      <section className="flex-grow flex flex-col justify-between gap-14 max-w-screen-2xl mx-auto px-4">
-        <CurrentStep step={step} />
-        <StepNavigation
-          step={step}
-          handleNextStep={handleNextStep}
-          handlePreviousStep={handlePreviousStep}
-        />
-      </section>
-    </UsersConnectionProvider>
+    <section className="flex-grow flex flex-col justify-between gap-14 max-w-screen-2xl mx-auto px-4">
+      <CurrentStep step={step} />
+      <StepNavigation
+        step={step}
+        handleNextStep={handleNextStep}
+        handlePreviousStep={handlePreviousStep}
+        disableFinish={!users.every((user: User) => user.ready)}
+      />
+    </section>
   );
 }
 

@@ -6,6 +6,7 @@ export function StepNavigation({
   step,
   handleNextStep,
   handlePreviousStep,
+  disableFinish,
 }: StepNavigationProps): JSX.Element {
   const handleFinish = () => {
     console.log("Finish");
@@ -15,7 +16,9 @@ export function StepNavigation({
     <div className="flex gap-3 self-center">
       {step > STEPS.ONE && <PreviousStepButton onClick={handlePreviousStep} />}
       {step < STEPS.TWO && <NextStepButton onClick={handleNextStep} />}
-      {step === STEPS.TWO && <FinishButton onClick={handleFinish} />}
+      {step === STEPS.TWO && (
+        <FinishButton onClick={handleFinish} disabled={disableFinish} />
+      )}
     </div>
   );
 }
@@ -32,17 +35,28 @@ function NextStepButton({ onClick }: ButtonProps): JSX.Element {
   return <StepButton onClick={onClick}>Siguiente</StepButton>;
 }
 
-function FinishButton({ onClick }: ButtonProps): JSX.Element {
-  return <StepButton onClick={onClick}>Comenzar</StepButton>;
+function FinishButton({ onClick, disabled }: ButtonProps): JSX.Element {
+  return (
+    <StepButton onClick={onClick} disabled={disabled}>
+      Comenzar
+    </StepButton>
+  );
 }
 
-function StepButton({ onClick, variant, children }: ButtonProps): JSX.Element {
+function StepButton({
+  onClick,
+  variant,
+  children,
+  ...props
+}: ButtonProps): JSX.Element {
   return (
     <Button
       size="lg"
       variant={variant}
-      className="text-lg font-bold w-40"
+      className="text-lg font-bold w-40 select-none"
       onClick={onClick}
+      draggable={false}
+      {...props}
     >
       {children}
     </Button>

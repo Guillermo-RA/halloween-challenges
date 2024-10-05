@@ -3,6 +3,7 @@ import {
   type UserConnectionContextType,
   type UserConntectionDispatchContext,
 } from "@/lib/types/UsersConnectionContextType";
+import { socket } from "@/lib/utils/socket";
 import { createContext, useContext } from "react";
 
 const UsersConnectionContext = createContext<UserConnectionContextType | null>(
@@ -19,20 +20,44 @@ export function UsersConnectionProvider({
 }) {
   const { users, setUsers } = useUsersConnected();
 
-  const handleEditUser = (id: number, username: string) => {
+  const handleEditUser = (
+    id: number,
+    userData: {
+      username?: string;
+      ready?: boolean;
+    },
+  ) => {
     setUsers((prevUsers) =>
-      prevUsers.map((user) => (user.id === id ? { ...user, username } : user)),
+      prevUsers.map((user) =>
+        user.id === id ? { ...user, ...userData } : user,
+      ),
     );
+
+    socket.emit("edit-user", { id, ...userData });
   };
 
   const handleDeleteUser = (id: number) => {
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+
+    socket.emit("delete-user", id);
+  };
+
+  const handleSetAllUsersToNotReady = () => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => ({ ...user, ready: false })),
+    );
+
+    socket.emit("clear-ready");
   };
 
   return (
     <UsersConnectionContext.Provider value={{ users }}>
       <UsersConnectionDispatchContext.Provider
-        value={{ handleEditUser, handleDeleteUser }}
+        value={{
+          handleEditUser,
+          handleDeleteUser,
+          handleSetAllUsersToNotReady,
+        }}
       >
         {children}
       </UsersConnectionDispatchContext.Provider>

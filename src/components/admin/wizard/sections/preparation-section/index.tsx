@@ -1,8 +1,17 @@
 import { UserItem } from "@/components/admin/wizard/sections/preparation-section/user-item";
-import { useUsersConnection } from "@/lib/contexts/users-connection-context";
+import {
+  useUsersConnection,
+  useUsersConnectionDispatch,
+} from "@/lib/contexts/users-connection-context";
+import { useEffect } from "react";
 
 export function PreparationStep(): JSX.Element {
   const { users } = useUsersConnection();
+  const { handleSetAllUsersToNotReady } = useUsersConnectionDispatch();
+
+  useEffect(() => {
+    handleSetAllUsersToNotReady();
+  }, []);
 
   return (
     <div className="flex flex-col gap-7 min-h-[28rem]">
