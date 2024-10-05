@@ -10,8 +10,8 @@ export function PreparationStep(): JSX.Element {
         Esperando a todos los participantes
       </h2>
       <div className="flex flex-wrap gap-14">
-        {users.map((user) => (
-          <UserItem key={user.id} user={user} />
+        {users.map((user, index) => (
+          <UserItem key={index} user={user} />
         ))}
       </div>
     </div>

@@ -3,6 +3,5 @@ export type User = {
     name: string;
     ready?: boolean;
     username?: string;
-    gender?: "boy"|"girl"|null;
     avatar?: string;
 };
