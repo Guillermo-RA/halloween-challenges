@@ -5,6 +5,7 @@ export type UserConnectionContextType = {
 }
 
 export type UserConntectionDispatchContext = {
-    handleEditUser: (id: number, username: string) => void;
+    handleEditUser: (id: number, userData: { username?: string; ready?: boolean; }) => void;
     handleDeleteUser: (id: number) => void;
+    handleSetAllUsersToNotReady: () => void;
 }

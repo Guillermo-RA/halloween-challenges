@@ -1,50 +1,48 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-
-const OPTIONS = [
-  { value: "boy", label: "Hombre" },
-  { value: "girl", label: "Mujer" },
-  { value: "non_binary", label: "No binario/Otro" },
-];
+import { REGISTER } from "@/lib/constants/api-routes";
+import { fetcher } from "@/lib/utils/fetch";
+import { useState } from "react";
 
 export function RegisterForm() {
+  const [error, setError] = useState("");
+
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(...args) =>
+        handleSubmit(...args, error).catch((err) => setError(err.message))
+      }
       className="flex flex-col gap-5 w-full p-4 flex-1"
     >
-      <NameInput />
-      <GenderInput />
+      <NameInput error={error} setError={setError} />
       <ButtonContainer />
     </form>
   );
 }
 
-function NameInput() {
+function NameInput({
+  error,
+  setError,
+}: {
+  error: string;
+  setError: (error: string) => void;
+}) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) setError("");
+  };
+
   return (
-    <label className="text-lg">
-      Nombre *
+    <label className="text-lg flex flex-col gap-1 h-24">
+      <span className="font-medium">Nombre *</span>
       <Input
         type="text"
         name="name"
         placeholder="Nombre"
-        className="h-10 text-lg font-bold bg-secondary"
-        required
+        className="h-10 text-lg font-bold bg-secondary shrink-0"
+        onChange={handleChange}
+        autoComplete="first-name"
       />
-    </label>
-  );
-}
-
-function GenderInput() {
-  return (
-    <label className="text-lg">
-      Género *
-      <Select
-        name="gender"
-        placeholder="Selecciona tu género"
-        options={OPTIONS}
-      />
+      <span className="text-red-500 text-sm pl-2">{error}</span>
     </label>
   );
 }
@@ -59,20 +57,20 @@ function ButtonContainer() {
   );
 }
 
-async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+async function handleSubmit(
+  event: React.FormEvent<HTMLFormElement>,
+  error: string,
+) {
   event.preventDefault();
+
+  if (error) return;
+
   const formData = new FormData(event.currentTarget);
   const data = Object.fromEntries(formData.entries()) ?? {};
 
-  const url = `http://localhost:3000/api/register`;
-  console.log(data);
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  }).then((res) => res.json());
+  if (data.name === "") throw new Error("El nombre es obligatorio");
+
+  const response = await fetcher(REGISTER, data, { method: "POST" });
 
   console.log(response);
 }
