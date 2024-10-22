@@ -58,6 +58,6 @@ function parseUser(user: User): User {
         name: user.name,
         username: user.username,
         avatar,
-        ready: Math.random() > 0.5,
+        ready: false,
     };
 }
