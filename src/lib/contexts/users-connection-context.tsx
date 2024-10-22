@@ -1,54 +1,50 @@
-import { useUsersConnected } from "@/lib/hooks/users-connected-hook";
+import { useUsersConnected } from '@/lib/hooks/users-connected-hook'
 import {
   type UserConnectionContextType,
-  type UserConntectionDispatchContext,
-} from "@/lib/types/UsersConnectionContextType";
-import { socket } from "@/lib/utils/socket";
-import { createContext, useContext } from "react";
+  type UserConntectionDispatchContext
+} from '@/lib/types/UsersConnectionContextType'
+import { socket } from '@/lib/utils/socket'
+import { createContext, useContext } from 'react'
 
 const UsersConnectionContext = createContext<UserConnectionContextType | null>(
-  null,
-);
+  null
+)
 
 const UsersConnectionDispatchContext =
-  createContext<UserConntectionDispatchContext | null>(null);
+  createContext<UserConntectionDispatchContext | null>(null)
 
-export function UsersConnectionProvider({
-  children,
+export function UsersConnectionProvider ({
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const { users, setUsers } = useUsersConnected();
+  const { users, setUsers } = useUsersConnected()
 
   const handleEditUser = (
-    id: number,
+    id: string,
     userData: {
-      username?: string;
-      ready?: boolean;
-    },
+      username?: string
+      ready?: boolean
+    }
   ) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === id ? { ...user, ...userData } : user,
-      ),
-    );
+    setUsers(prevUsers =>
+      prevUsers.map(user => (user.id === id ? { ...user, ...userData } : user))
+    )
 
-    socket.emit("edit-user", { id, ...userData });
-  };
+    socket.emit('edit-user', { id, ...userData })
+  }
 
-  const handleDeleteUser = (id: number) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+  const handleDeleteUser = (id: string) => {
+    setUsers(prevUsers => prevUsers.filter(user => user.id !== id))
 
-    socket.emit("delete-user", id);
-  };
+    socket.emit('delete-user', id)
+  }
 
   const handleSetAllUsersToNotReady = () => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => ({ ...user, ready: false })),
-    );
+    setUsers(prevUsers => prevUsers.map(user => ({ ...user, ready: false })))
 
-    socket.emit("clear-ready");
-  };
+    socket.emit('clear-ready')
+  }
 
   return (
     <UsersConnectionContext.Provider value={{ users }}>
@@ -56,35 +52,35 @@ export function UsersConnectionProvider({
         value={{
           handleEditUser,
           handleDeleteUser,
-          handleSetAllUsersToNotReady,
+          handleSetAllUsersToNotReady
         }}
       >
         {children}
       </UsersConnectionDispatchContext.Provider>
     </UsersConnectionContext.Provider>
-  );
+  )
 }
 
-export function useUsersConnection() {
-  const currentUserContext = useContext(UsersConnectionContext);
+export function useUsersConnection () {
+  const currentUserContext = useContext(UsersConnectionContext)
 
   if (!currentUserContext) {
     throw new Error(
-      "useUsersConnection must be used within a UsersConnectionProvider",
-    );
+      'useUsersConnection must be used within a UsersConnectionProvider'
+    )
   }
 
-  return currentUserContext;
+  return currentUserContext
 }
 
-export function useUsersConnectionDispatch() {
-  const currentUserDispatchContext = useContext(UsersConnectionDispatchContext);
+export function useUsersConnectionDispatch () {
+  const currentUserDispatchContext = useContext(UsersConnectionDispatchContext)
 
   if (!currentUserDispatchContext) {
     throw new Error(
-      "useUsersConnectionDispatch must be used within a UsersConnectionProvider",
-    );
+      'useUsersConnectionDispatch must be used within a UsersConnectionProvider'
+    )
   }
 
-  return currentUserDispatchContext;
+  return currentUserDispatchContext
 }
