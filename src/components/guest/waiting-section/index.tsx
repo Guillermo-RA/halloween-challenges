@@ -1,4 +1,4 @@
-import { PlayerDataCard } from '@/components/guest/waiting-section/player-data-card'
+import { PlayerDataCard } from '@/components/guest/waiting-section/player-card'
 import { Button } from '@/components/ui/button'
 import { USER } from '@/lib/constants/api-routes'
 import type { RegisterResponse } from '@/lib/types/RegisterResponse'
