@@ -20,7 +20,10 @@ export function StepNavigation ({
         <NextStepButton onClick={handleNextStep} disabled={disableNext} />
       )}
       {step === STEPS.TWO && (
-        <FinishButton onClick={handleFinish} disabled={disableFinish} />
+        <FinishButton
+          onClick={handleFinish}
+          disabled={disableFinish || disableNext}
+        />
       )}
     </div>
   )

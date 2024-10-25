@@ -19,18 +19,25 @@ export function useUsersConnected() {
 
     useEffect(() => {
         socket.connect();
-        socket.on('new-user', (user: User) => {
-            setUsers((prevUsers) => [...prevUsers, parseUser(user)]);
-        }).on('delete-user', (id: string) => {
-            setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-        }).on('edit-user', (updatedUser: User) => {
-            setUsers((prevUsers) =>
-                prevUsers.map((user) => (user.id === updatedUser.id
-                    ? parseUser(updatedUser)
-                    : user)));
-        }).on('clear-players', () => {
-            setUsers([]);
-        });
+        socket
+            .on('create-user', (user: User) => {
+                setUsers((prevUsers) => [...prevUsers, parseUser(user)]);
+            }).on('update-user', (updatedUser: User) => {
+                setUsers((prevUsers) =>
+                    prevUsers.map((user) => (user.id === updatedUser.id
+                        ? parseUser(updatedUser)
+                        : user)));
+            }).on('delete-user', (id: string) => {
+                setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+            }).on('clear-users', () => {
+                setUsers([]);
+            }).on('user-ready', (id: string) => {
+                setUsers((prevUsers) =>
+                    prevUsers.map((user) => (user.id === id ? { ...user, ready: true } : user)));
+            }).on('user-not-ready', (id: string) => {
+                setUsers((prevUsers) =>
+                    prevUsers.map((user) => (user.id === id ? { ...user, ready: false } : user)));
+            });
 
         return () => {
             socket.disconnect();
@@ -51,7 +58,7 @@ function getUsers(): User[] {
 }
 
 function parseUser(user: User): User {
-    const avatar = getAvatar(user);
+    const avatar = user.avatar ?? getAvatar(user);
 
     return {
         id: user.id,
