@@ -1,22 +1,22 @@
-import type { SelectProps } from "@/lib/types/Select";
+import type { SelectProps } from '@/lib/types/Select'
 import {
   Select as BaseSelect,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/base-select";
+  SelectValue
+} from '@/components/ui/base-select'
 
-export function Select({
+export function Select ({
   name,
   options,
   required,
-  placeholder = "Selecciona una opción",
+  placeholder = 'Selecciona una opción'
 }: SelectProps) {
   return (
     <BaseSelect name={name} required={required}>
-      <SelectTrigger className="w-full h-10 bg-secondary text-lg font-bold">
+      <SelectTrigger className='w-full h-10 bg-secondary text-lg font-bold'>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -25,7 +25,7 @@ export function Select({
             <SelectItem
               key={index}
               value={option.value}
-              className="text-lg h-10 font-bold"
+              className='text-lg h-10 font-bold'
             >
               {option.label}
             </SelectItem>
@@ -33,5 +33,5 @@ export function Select({
         </SelectGroup>
       </SelectContent>
     </BaseSelect>
-  );
+  )
 }
