@@ -3,4 +3,5 @@ export type StepNavigationProps = {
     handleNextStep: () => void;
     handlePreviousStep: () => void;
     disableFinish: boolean;
+    disableNext: boolean;
 };
