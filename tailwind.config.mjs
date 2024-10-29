@@ -56,6 +56,43 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			},
+			'checked': {
+				'0%': {
+					rotate: '0deg',
+					scale: '1'
+				},
+				'50%': {
+					rotate: '35deg',
+					scale: '1.09'
+				},
+				'100%': {
+					rotate: '0deg',
+					scale: '1'
+				}
+			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+			'checked': 'checked 0.5s cubic-bezier(0.5, -0.4, 0.5, 1.55)'
   		}
   	}
   },

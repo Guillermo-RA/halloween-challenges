@@ -1,0 +1,11 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { GameSection } from "@/components/guest/game-section"
+---
+
+<Layout title="Esperando...">
+  <main class="mx-auto max-w-screen-sm p-10 min-h-screen bg-purple-950/30">
+    <h1 class="text-4xl font-bold text-primary mb-14">Halloween Challenges</h1>
+    <GameSection client:only="react" />
+  </main>
+</Layout>
