@@ -3,7 +3,3 @@ export type PrimaryMission = {
   target: string
   action: string
 }
-
-export type SecondaryMission = {
-  description: string
-}

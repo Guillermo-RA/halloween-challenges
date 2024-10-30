@@ -1,37 +1,43 @@
-import { MissionCard } from '@/components/guest/game-section/game-diary/missions/primary-mission/mission-card'
+import { PrimaryMissionCard } from '@/components/guest/game-section/game-diary/missions/primary-mission/mission-card'
+import { SecondaryMissions } from '@/components/guest/game-section/game-diary/missions/secondary-missions'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { getPrimaryMissionMessage } from '@/lib/helpers/missions'
-import { cn } from '@/lib/utils'
-import { Shield } from 'lucide-react'
-import { useState } from 'react'
+import { getPrimaryMissionMessage, getSecondaryMissions } from '@/lib/helpers/missions'
+import { NotepadText, Shield } from 'lucide-react'
+import type React from 'react'
 
-export function PrimaryMission() {
+export function MissionsSections() {
     const player = localStorage?.getItem('user')
         ? JSON.parse(localStorage.getItem('user') as string)
         : null
 
     const primaryMission = getPrimaryMissionMessage(player)
-
-    if (!primaryMission) {
-        return (
-            <Section>
-                <p className='text-foreground text-lg'>
-                    No tienes ninguna misión asignada
-                </p>
-            </Section>
-        )
-    }
+    const secondaryMissions = getSecondaryMissions(player)
 
     return (
-        <Section>
-            <MissionCard mission={primaryMission} />
-        </Section>
+        <div className='flex flex-col gap-6'>
+            <Section type='principal' icon={Shield}>
+                {primaryMission
+                    ? <PrimaryMissionCard mission={primaryMission} />
+                    : (
+                        <p className='text-foreground text-lg'>
+                            No tienes ninguna misión asignada
+                        </p>
+                    )}
+            </Section>
+            <Section type='secundarias' icon={NotepadText}>
+                {secondaryMissions.length
+                    ? <SecondaryMissions secondaryMissions={secondaryMissions} />
+                    : (
+                        <p className='text-foreground text-lg'>
+                            No tienes ninguna misión secundaria asignada
+                        </p>
+                    )}
+            </Section>
+        </div>
     )
 }
-function Section({ children }: { children: React.ReactNode }) {
-    const [collapsed, setCollapsed] = useState(false)
-
-    const toggleCollapse = () => setCollapsed(!collapsed)
+function Section({ type, icon: Icon, children }: { type: string, icon: React.ElementType, children: React.ReactNode }) {
+    const missionPrefix = type === 'principal' ? 'Misión' : 'Misiones'
 
     return (
         <section className='flex flex-col gap-6'>
@@ -39,8 +45,8 @@ function Section({ children }: { children: React.ReactNode }) {
                 <AccordionItem value="primary_mission">
                     <AccordionTrigger className='no-underline hover:no-underline'>
                         <h2 className='flex gap-3 items-center text-foreground font-bold text-3xl'>
-                            <Shield className='w-7 h-7' />
-                            <span>Misión principal</span>
+                            <Icon className='w-7 h-7' />
+                            <span>{missionPrefix} {type}</span>
                         </h2>
                     </AccordionTrigger>
                     <AccordionContent>

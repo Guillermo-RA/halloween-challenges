@@ -2,13 +2,14 @@ import { STEPS } from '@/components/admin/wizard/challenge-wizard'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import type { StepNavigationProps } from '@/lib/types/StepNavigation'
 
-export function StepNavigation ({
+export function StepNavigation({
   step,
   handleNextStep,
   handlePreviousStep,
   disableFinish,
   disableNext
 }: StepNavigationProps): JSX.Element {
+
   const handleFinish = () => {
     console.log('Finish')
   }
@@ -29,7 +30,7 @@ export function StepNavigation ({
   )
 }
 
-function PreviousStepButton ({ onClick }: ButtonProps): JSX.Element {
+function PreviousStepButton({ onClick }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} variant='secondary'>
       Volver
@@ -37,7 +38,7 @@ function PreviousStepButton ({ onClick }: ButtonProps): JSX.Element {
   )
 }
 
-function NextStepButton ({ onClick, disabled }: ButtonProps): JSX.Element {
+function NextStepButton({ onClick, disabled }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} disabled={disabled}>
       Siguiente
@@ -45,7 +46,7 @@ function NextStepButton ({ onClick, disabled }: ButtonProps): JSX.Element {
   )
 }
 
-function FinishButton ({ onClick, disabled }: ButtonProps): JSX.Element {
+function FinishButton({ onClick, disabled }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} disabled={disabled}>
       Comenzar
@@ -53,7 +54,7 @@ function FinishButton ({ onClick, disabled }: ButtonProps): JSX.Element {
   )
 }
 
-function StepButton ({
+function StepButton({
   onClick,
   variant,
   children,

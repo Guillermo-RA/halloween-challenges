@@ -1,8 +1,9 @@
 import { Checkbox } from '@/components/ui/checkbox';
+import { isMidnight } from '@/lib/constants/common';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
-export function MissionCard({ mission }: { mission: { shortText: string; description: string } }) {
+export function PrimaryMissionCard({ mission }: { mission: { shortText: string; description: string } }) {
 
     const defaultChecked = getIsChecked()
 
@@ -46,7 +47,7 @@ function PrimaryMissionCheckbox({ name }: { name: string }) {
             checked={isChecked}
             className='rounded-full w-20 h-20 data-[state=checked]:animate-checked'
             checkClassName='w-20 h-20'
-            disabled={isChecked}
+            disabled={isChecked || isMidnight}
         />
     )
 }

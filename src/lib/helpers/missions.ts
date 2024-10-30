@@ -19,6 +19,10 @@ export function getPrimaryMissionMessage(player: User | null): { shortText: stri
     }
 }
 
+export function getSecondaryMissions(player: User | null): string[] {
+    return player?.secondary_missions || []
+}
+
 function getDescription(mission: PrimaryMission): string {
 
     const message = 'Tu misión consiste en hacer que {{target}} {{type}} {{action}} antes de que sean las 0:00. Si lo consigues, recibirás 3 puntos. Si no, perderás 1 punto.'
