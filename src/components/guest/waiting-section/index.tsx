@@ -1,14 +1,16 @@
 import { PlayerDataCard } from '@/components/guest/waiting-section/player-card'
 import { Button } from '@/components/ui/button'
 import { USER } from '@/lib/constants/api-routes'
+import { useGame } from '@/lib/hooks/game-hook'
 import type { RegisterResponse } from '@/lib/types/RegisterResponse'
 import { cn } from '@/lib/utils'
 import { fetcher } from '@/lib/utils/fetch'
 import { navigate } from 'astro:transitions/client'
 import { useState } from 'react'
 
-export function WaitingSection () {
-  const [ready, setReady] = useState(false)
+export function WaitingSection() {
+  const [ready, setReady] = useState(getUserReady)
+  const { gameStarting, gameStarted } = useGame()
 
   const user = localStorage?.getItem('user')
     ? JSON.parse(localStorage.getItem('user') as string)
@@ -16,6 +18,11 @@ export function WaitingSection () {
 
   if (!user) {
     navigate('/', { history: 'replace' })
+    return null
+  }
+
+  if ((gameStarting || gameStarted && ready) && user.ready) {
+    navigate('/game', { history: 'replace' })
     return null
   }
 
@@ -30,7 +37,7 @@ export function WaitingSection () {
   )
 }
 
-function ActionButtons ({
+function ActionButtons({
   user,
   ready,
   setReady
@@ -41,14 +48,14 @@ function ActionButtons ({
 }) {
   const [loading, setLoading] = useState(false)
 
+  const { gameStarting, gameStarted } = useGame()
+
   const handleCancel = () => {
     setLoading(true)
-    window.localStorage.removeItem('user')
+    localStorage.removeItem('user')
+
     fetcher(USER, { id: user.id }, { method: 'DELETE' })
-      .then(res => {
-        console.log(res)
-        navigate('/', { history: 'replace' })
-      })
+      .then(() => navigate('/', { history: 'replace' }))
       .catch(console.error)
       .finally(() => setLoading(false))
   }
@@ -60,7 +67,6 @@ function ActionButtons ({
         { ...user, ready: !ready },
         { method: 'PUT' }
       )) as RegisterResponse
-
       localStorage.setItem('user', JSON.stringify(response.data))
       setReady(!!response.data.ready)
     } catch (error) {
@@ -86,9 +92,18 @@ function ActionButtons ({
         size='lg'
         variant='secondary'
         onClick={handleReady}
+        disabled={gameStarting || gameStarted}
       >
         {ready ? 'Cancelar' : '¡Todo Listo!'}
       </Button>
     </div>
   )
+}
+
+function getUserReady() {
+  const user = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user') as string)
+    : null
+
+  return !!user?.ready
 }

@@ -1,16 +1,22 @@
 import { STEPS } from '@/components/admin/wizard/challenge-wizard'
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { STARTING_GAME } from '@/lib/constants/api-routes'
 import type { StepNavigationProps } from '@/lib/types/StepNavigation'
+import { fetcher } from '@/lib/utils/fetch'
+import { navigate } from 'astro:transitions/client'
 
-export function StepNavigation ({
+export function StepNavigation({
   step,
   handleNextStep,
   handlePreviousStep,
   disableFinish,
   disableNext
 }: StepNavigationProps): JSX.Element {
+
   const handleFinish = () => {
-    console.log('Finish')
+    fetcher(STARTING_GAME, {}, { method: 'POST' }).then(() => {
+      navigate('/admin/game')
+    })
   }
 
   return (
@@ -29,7 +35,7 @@ export function StepNavigation ({
   )
 }
 
-function PreviousStepButton ({ onClick }: ButtonProps): JSX.Element {
+function PreviousStepButton({ onClick }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} variant='secondary'>
       Volver
@@ -37,7 +43,7 @@ function PreviousStepButton ({ onClick }: ButtonProps): JSX.Element {
   )
 }
 
-function NextStepButton ({ onClick, disabled }: ButtonProps): JSX.Element {
+function NextStepButton({ onClick, disabled }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} disabled={disabled}>
       Siguiente
@@ -45,7 +51,7 @@ function NextStepButton ({ onClick, disabled }: ButtonProps): JSX.Element {
   )
 }
 
-function FinishButton ({ onClick, disabled }: ButtonProps): JSX.Element {
+function FinishButton({ onClick, disabled }: ButtonProps): JSX.Element {
   return (
     <StepButton onClick={onClick} disabled={disabled}>
       Comenzar
@@ -53,7 +59,7 @@ function FinishButton ({ onClick, disabled }: ButtonProps): JSX.Element {
   )
 }
 
-function StepButton ({
+function StepButton({
   onClick,
   variant,
   children,

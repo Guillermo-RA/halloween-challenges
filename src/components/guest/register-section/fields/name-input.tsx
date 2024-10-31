@@ -17,7 +17,7 @@ export function NameInput ({
 
   return (
     <label className='text-lg flex flex-col gap-1 h-24'>
-      <span className='font-medium'> Nombre * </span>
+      <span className='font-medium'>Nombre * </span>
       <Input
         type='text'
         name='name'
