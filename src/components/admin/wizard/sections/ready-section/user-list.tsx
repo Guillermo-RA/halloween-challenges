@@ -3,9 +3,7 @@ import { useUsersConnection } from '@/lib/contexts/users-connection-context'
 import type { User } from '@/lib/types/User'
 import { cn } from '@/lib/utils'
 
-export function UserList (): JSX.Element {
-  const { users } = useUsersConnection()
-
+export function UserList({ users }: { users: User[] }): JSX.Element {
   return (
     <div className='flex flex-col content-start flex-wrap h-96 gap-7 w-full items-center'>
       {users.map(user => (
@@ -15,7 +13,7 @@ export function UserList (): JSX.Element {
   )
 }
 
-function UserListItem ({ user }: { user: User }): JSX.Element {
+function UserListItem({ user }: { user: User }): JSX.Element {
   return (
     <div
       className={cn(

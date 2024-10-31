@@ -41,8 +41,8 @@ function Section({ type, icon: Icon, children }: { type: string, icon: React.Ele
 
     return (
         <section className='flex flex-col gap-6'>
-            <Accordion type="single" collapsible defaultValue='primary_mission' >
-                <AccordionItem value="primary_mission">
+            <Accordion type="single" collapsible defaultValue={`principal_mission`}>
+                <AccordionItem value={`${type}_mission`}>
                     <AccordionTrigger className='no-underline hover:no-underline'>
                         <h2 className='flex gap-3 items-center text-foreground font-bold text-3xl'>
                             <Icon className='w-7 h-7' />

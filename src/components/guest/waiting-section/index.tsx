@@ -9,7 +9,7 @@ import { navigate } from 'astro:transitions/client'
 import { useState } from 'react'
 
 export function WaitingSection() {
-  const [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(getUserReady)
   const { gameStarting, gameStarted } = useGame()
 
   const user = localStorage?.getItem('user')
@@ -67,7 +67,6 @@ function ActionButtons({
         { ...user, ready: !ready },
         { method: 'PUT' }
       )) as RegisterResponse
-
       localStorage.setItem('user', JSON.stringify(response.data))
       setReady(!!response.data.ready)
     } catch (error) {
@@ -99,4 +98,12 @@ function ActionButtons({
       </Button>
     </div>
   )
+}
+
+function getUserReady() {
+  const user = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user') as string)
+    : null
+
+  return !!user?.ready
 }

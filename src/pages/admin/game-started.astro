@@ -1,0 +1,13 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { GameStarted as GameStartedComponent } from "@/components/admin/game-started"
+---
+
+<Layout title="Halloween Challenges Presents">
+    <main class="p-10 min-h-screen bg-purple-950/30">
+        <h1 class="text-6xl font-bold text-primary mb-20">
+            Gran Piso Halloween
+        </h1>
+        <GameStartedComponent client:only="react" />
+    </main>
+</Layout>

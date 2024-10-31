@@ -1,7 +1,7 @@
 import { UserList } from '@/components/admin/wizard/sections/ready-section/user-list'
 import { useUsersConnection } from '@/lib/contexts/users-connection-context'
 
-export function ReadyStep (): JSX.Element {
+export function ReadyStep(): JSX.Element {
   const { users } = useUsersConnection()
   const readyUsers = users.filter(user => user.ready)
 
@@ -13,7 +13,7 @@ export function ReadyStep (): JSX.Element {
           ({readyUsers.length}/{users.length})
         </span>
       </div>
-      <UserList />
+      <UserList users={users} />
     </div>
   )
 }

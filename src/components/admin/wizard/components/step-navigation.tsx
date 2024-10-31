@@ -1,6 +1,9 @@
 import { STEPS } from '@/components/admin/wizard/challenge-wizard'
 import { Button, type ButtonProps } from '@/components/ui/button'
+import { STARTING_GAME } from '@/lib/constants/api-routes'
 import type { StepNavigationProps } from '@/lib/types/StepNavigation'
+import { fetcher } from '@/lib/utils/fetch'
+import { navigate } from 'astro:transitions/client'
 
 export function StepNavigation({
   step,
@@ -11,7 +14,9 @@ export function StepNavigation({
 }: StepNavigationProps): JSX.Element {
 
   const handleFinish = () => {
-    console.log('Finish')
+    fetcher(STARTING_GAME, {}, { method: 'POST' }).then(() => {
+      navigate('/admin/game')
+    })
   }
 
   return (

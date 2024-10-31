@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 export function GameDiary() {
 
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft())
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,7 +22,6 @@ export function GameDiary() {
 }
 
 function getTimeLeft() {
-  // i want to build a countdown until midnight formatted like this: 00:00:00 (hours:minutes:seconds)
   const now = moment()
   const midnight = moment().endOf('day')
   const diff = midnight.diff(now)

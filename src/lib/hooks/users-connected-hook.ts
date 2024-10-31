@@ -13,7 +13,7 @@ const DUMMY_USERS: User[] = [
 ]
 
 export function useUsersConnected () {
-  const [users, setUsers] = useState<User[]>(() => getUsers())
+  const [users, setUsers] = useState<User[]>(getUsers)
 
   useEffect(() => {
     socket.connect()
@@ -77,12 +77,8 @@ function parseUser (user: User): User {
     name: user.name,
     username: user.username,
     avatar,
-    ready: false,
-    primary_mission: {
-      type: 'say',
-      target: 'Pablo',
-      action: 'papanatas'
-    },
+    ready: user.ready,
+    primary_mission: user.primary_mission,
     secondary_missions: user.secondary_missions
   }
 }

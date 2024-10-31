@@ -1,5 +1,8 @@
 export type PrimaryMission = {
   type: 'say' | 'do'
-  target: string
+  target: {
+    id: string
+    name: string
+  }
   action: string
 }
