@@ -1,4 +1,4 @@
-import type { PrimaryMission, SecondaryMission } from '@/lib/types/Missions'
+import type { PrimaryMission } from '@/lib/types/Missions'
 
 export type User = {
   id: string
@@ -7,5 +7,5 @@ export type User = {
   username?: string
   avatar?: string
   primary_mission?: PrimaryMission
-  secondary_missions?: SecondaryMission[]
+  secondary_missions?: string[]
 }
