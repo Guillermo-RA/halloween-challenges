@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 
-export function NameInput ({
+export function NameInput({
   error,
   setError
 }: {
@@ -9,10 +9,6 @@ export function NameInput ({
 }) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) setError('')
-  }
-
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (!event.target.value) setError('El nombre es requerido')
   }
 
   return (

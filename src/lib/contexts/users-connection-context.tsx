@@ -2,7 +2,6 @@ import { useUsersConnected } from '@/lib/hooks/users-connected-hook'
 import {
   type UserConnectionContextType,
 } from '@/lib/types/UsersConnectionContextType'
-import { socket } from '@/lib/utils/socket'
 import { createContext, useContext } from 'react'
 
 const UsersConnectionContext = createContext<UserConnectionContextType | null>(
