@@ -2,6 +2,7 @@
   "name": "pokemon-tournament-maker",
   "type": "module",
   "version": "0.0.1",
+  "home": "https://guillermo-ra.github.io/halloween-challenges",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev --host",
