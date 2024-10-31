@@ -5,7 +5,7 @@ import type { User } from '@/lib/types/User'
 import { Save, X } from 'lucide-react'
 import { useState } from 'react'
 
-export function PlayerEditCard ({
+export function PlayerEditCard({
   player,
   handleEditMode
 }: {
@@ -46,13 +46,13 @@ export function PlayerEditCard ({
   )
 }
 
-function EditActions ({
+function EditActions({
   handleEditMode
 }: {
   handleEditMode: (value: boolean) => void
 }) {
   return (
-    <div className='flex gap-4'>
+    <div className='flex justify-center gap-4 w-full'>
       <Button type='submit'>
         <Save className='w-6 h-6' />
       </Button>

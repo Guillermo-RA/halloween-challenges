@@ -4,7 +4,7 @@ import { UserBadgeConnected } from '@/components/ui/user-badge-ready'
 import type { User } from '@/lib/types/User'
 import { Pencil } from 'lucide-react'
 
-export function PlayerShowCard ({
+export function PlayerShowCard({
   player,
   handleEditMode
 }: {
@@ -23,7 +23,7 @@ export function PlayerShowCard ({
   )
 }
 
-function ShowActions ({
+function ShowActions({
   handleEditMode,
   ready
 }: {
@@ -31,7 +31,7 @@ function ShowActions ({
   ready: boolean
 }) {
   return (
-    <div className='flex gap-4'>
+    <div className='flex justify-center gap-4 w-full'>
       <Button onClick={() => handleEditMode(true)} disabled={ready}>
         <Pencil className='w-6 h-6' />
       </Button>

@@ -15,6 +15,7 @@ export function StepNavigation({
 
   const handleFinish = () => {
     fetcher(STARTING_GAME, {}, { method: 'POST' }).then(() => {
+      localStorage.setItem('game_starting', 'true')
       navigate('/admin/game')
     })
   }

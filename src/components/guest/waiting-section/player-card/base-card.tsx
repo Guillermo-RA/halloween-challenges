@@ -3,9 +3,9 @@ import type { User } from '@/lib/types/User'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
-export function BaseCard ({ children }: { children: React.ReactNode }) {
+export function BaseCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className='flex gap-5 justify-between items-center w-full h-28'>
+    <div className='flex flex-wrap gap-5 justify-between items-center w-full h-36'>
       {children}
     </div>
   )
@@ -16,23 +16,23 @@ BaseCard.Image = Image
 BaseCard.Name = Name
 BaseCard.Input = NameInput
 
-function NameAndImage ({ children }: { children: React.ReactNode }) {
+function NameAndImage({ children }: { children: React.ReactNode }) {
   return <div className='flex items-center gap-8'>{children}</div>
 }
 
-function Image ({ player }: { player: User }) {
+function Image({ player }: { player: User }) {
   const [loading, setLoading] = useState(true)
 
   return (
     <>
       {loading && (
-        <div className='w-20 h-20 bg-gray-400 rounded-full animate-pulse'></div>
+        <div className='w-16 h-16 bg-gray-400 rounded-full animate-pulse'></div>
       )}
       <img
         src={player.avatar}
         alt={player.name}
         className={cn(
-          'rounded-full invisible opacity-0 transition-opacity duration-[250ms] w-20 h-20 absolute',
+          'rounded-full invisible opacity-0 transition-opacity duration-[250ms] w-16 h-16 absolute',
           { 'relative opacity-100 visible': !loading }
         )}
         onLoad={() => setLoading(false)}
@@ -41,18 +41,18 @@ function Image ({ player }: { player: User }) {
   )
 }
 
-function Name ({ children }: { children: React.ReactNode }) {
-  return <p className='text-foreground font-medium text-2xl'>{children}</p>
+function Name({ children }: { children: React.ReactNode }) {
+  return <p className='text-foreground font-medium text-xl'>{children}</p>
 }
 
-function NameInput (props: React.InputHTMLAttributes<HTMLInputElement>) {
+function NameInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <Input
       type='text'
       value={props.value}
       onChange={props.onChange}
       onBlur={props.onBlur}
-      className='h-10 text-foreground font-medium text-2xl'
+      className='h-10 text-foreground font-medium text-xl'
       autoComplete='given-name'
       autoFocus
     />

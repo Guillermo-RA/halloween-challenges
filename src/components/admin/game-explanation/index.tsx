@@ -45,7 +45,7 @@ export function GameExplanation() {
                 <p>Si lo conseguís, recibiréis <b>3 puntos</b>.</p>
             </span>
             <p className='animate-text-3'>También hay 2 misiones secundarias con las que podréis ganar 1 punto con cada una. En ellas en lugar de que otra persona haga algo, tendréis que hacerlo vosotros sin que se note.</p>
-            <p className='animate-text-4'>Tendréis hasta <b>medianoche</b> para completarlas</p>
+            <p className='animate-text-4'>Tendréis hasta las <b>02:30</b> para completarlas</p>
         </section>
     )
 }
